@@ -1,0 +1,1196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.leaf.service.system.dao.SystemUserDao"> 
+	
+	<!-- COLUMNS -->
+	<sql id="COLUMNS">
+	    <![CDATA[ 
+			systemUser_.ID ,
+			systemUser_.USER_NAME ,
+			systemUser_.USER_PWD ,
+			systemUser_.USER_PLAIN_PWD ,
+			systemUser_.USER_CODE ,
+			systemUser_.USER_FULL_NAME ,
+			systemUser_.FK_ORG_ID ,
+			systemUser_.ORG_CODE ,
+			systemUser_.ORG_NAME ,
+			systemUser_.FK_STATION_ID ,
+			systemUser_.USER_PHONE ,
+			systemUser_.USER_WX_OPENID ,
+			systemUser_.USER_EMAIL ,
+			systemUser_.USER_MRG_TYPE ,
+			systemUser_.USER_SEX ,
+			systemUser_.USER_AVATAR ,
+			systemUser_.USER_ISASTRICT ,
+			systemUser_.USER_ASTRICT_LOGINTIME ,
+			systemUser_.USER_ISWAP ,
+			systemUser_.USER_LOGIN_LASTIP ,
+			systemUser_.USER_LOGIN_LASTDATE ,
+			systemUser_.USER_SORT ,
+			systemUser_.PINYIN ,
+			systemUser_.DATA_SCOPE ,
+			systemUser_.CREATE_BY ,
+			systemUser_.CREATE_DATE ,
+			systemUser_.UPDATE_BY ,
+			systemUser_.UPDATE_DATE ,
+			systemUser_.DEL_FLAG ,
+			systemUser_.REMARKS ,
+			systemUser_.BAK1 ,
+			systemUser_.BAK2 ,
+			systemUser_.BAK3 
+	    ]]>
+	</sql>
+	
+	<sql id="NICK_NAME">
+		systemUser_
+	</sql>
+	
+	<sql id="TABLE_NAME">
+		system_user
+	</sql>
+	
+	<sql id="TABLE">
+		<include refid="TABLE_NAME" /> <include refid="NICK_NAME" />
+	</sql>
+	
+	
+	<sql id="SELECT">
+		SELECT
+		<include refid="COLUMNS" />
+		FROM
+		<include refid="TABLE" />
+	</sql>
+	
+	<sql id="SELECT_COUNT">
+		SELECT
+		COUNT(1)
+		FROM
+		<include refid="TABLE" />
+	</sql>
+	
+	<sql id="DEL_FLAG">
+		<include refid="NICK_NAME" />.DEL_FLAG = 0
+	</sql>
+	
+	<!-- ENTITY_RESULT_MAP -->
+	<resultMap id="ENTITY_RESULT_MAP" type="com.leaf.service.system.domain.SystemUser">
+        <result property="id" column="ID"/> <!-- 主键ID -->
+        <result property="userName" column="USER_NAME"/> <!-- 用户名称 -->
+        <result property="userPwd" column="USER_PWD"/> <!-- 用户密码 -->
+        <result property="userPlainPwd" column="USER_PLAIN_PWD"/> <!-- 用户密码明文 -->
+        <result property="userCode" column="USER_CODE"/> <!-- 用户工号，可自动生成 -->
+        <result property="userFullName" column="USER_FULL_NAME"/> <!-- 用户全称 -->
+        <result property="fkOrgId" column="FK_ORG_ID"/> <!-- 用户组织ID -->
+        <result property="orgCode" column="ORG_CODE"/> <!-- 用户组织编码 -->
+        <result property="orgName" column="ORG_NAME"/> <!-- 用户组织编码 -->
+        <result property="fkStationId" column="FK_STATION_ID"/> <!-- 用户岗位ID -->
+        <result property="userPhone" column="USER_PHONE"/> <!-- 用户手机 -->
+        <result property="userWxOpenid" column="USER_WX_OPENID"/> <!-- 微信号 -->
+        <result property="userEmail" column="USER_EMAIL"/> <!-- 用户邮箱 -->
+        <result property="userMrgType" column="USER_MRG_TYPE"/> <!-- 用户类型（0非管理员 1系统管理员  2二级管理员） -->
+        <result property="userSex" column="USER_SEX"/> <!-- 用户性别 -->
+        <result property="userAvatar" column="USER_AVATAR"/> <!-- 用户头像 -->
+        <result property="userIsastrict" column="USER_ISASTRICT"/> <!-- 是否限定登陆，0不限定，1限定 -->
+        <result property="userAstrictLogintime" column="USER_ASTRICT_LOGINTIME"/> <!-- 限定登陆时间 -->
+        <result property="userIswap" column="USER_ISWAP"/> <!-- 是否允许手机登陆，0允许1不允许 -->
+        <result property="userLoginLastip" column="USER_LOGIN_LASTIP"/> <!-- 最后登陆IP -->
+        <result property="userLoginLastdate" column="USER_LOGIN_LASTDATE"/> <!-- 最后登陆时间 -->
+	</resultMap>
+	
+	
+	<resultMap id="ENTITY_RESULT_MAP_OLD" type="com.leaf.service.system.domain.SystemUser">
+        <result property="id" column="ID"/> <!-- 主键ID -->
+        <result property="userName" column="USER_NAME"/> <!-- 用户名称 -->
+        <result property="userPwd" column="USER_PWD"/> <!-- 用户密码 -->
+        <result property="userPlainPwd" column="USER_PLAIN_PWD"/> <!-- 用户密码明文 -->
+        <result property="userCode" column="USER_CODE"/> <!-- 用户工号，可自动生成 -->
+        <result property="userFullName" column="USER_FULL_NAME"/> <!-- 用户全称 -->
+        <result property="fkOrgId" column="FK_ORG_ID"/> <!-- 用户组织ID -->
+        <result property="orgCode" column="ORG_CODE"/> <!-- 用户组织编码 -->
+        <result property="orgName" column="ORG_NAME"/> <!-- 用户组织编码 -->
+        <result property="fkStationId" column="FK_STATION_ID"/> <!-- 用户岗位ID -->
+        <result property="userPhone" column="USER_PHONE"/> <!-- 用户手机 -->
+        <result property="userWxOpenid" column="USER_WX_OPENID"/> <!-- 微信号 -->
+        <result property="userEmail" column="USER_EMAIL"/> <!-- 用户邮箱 -->
+        <result property="userMrgType" column="USER_MRG_TYPE"/> <!-- 用户类型（0非管理员 1系统管理员  2二级管理员） -->
+        <result property="userSex" column="USER_SEX"/> <!-- 用户性别 -->
+        <result property="userAvatar" column="USER_AVATAR"/> <!-- 用户头像 -->
+        <result property="userIsastrict" column="USER_ISASTRICT"/> <!-- 是否限定登陆，0不限定，1限定 -->
+        <result property="userAstrictLogintime" column="USER_ASTRICT_LOGINTIME"/> <!-- 限定登陆时间 -->
+        <result property="userIswap" column="USER_ISWAP"/> <!-- 是否允许手机登陆，0允许1不允许 -->
+        <result property="userLoginLastip" column="USER_LOGIN_LASTIP"/> <!-- 最后登陆IP -->
+        <result property="userLoginLastdate" column="USER_LOGIN_LASTDATE"/> <!-- 最后登陆时间 -->
+        <result property="userSort" column="USER_SORT"/> <!-- 排序 -->
+        <result property="pinyin" column="PINYIN"/> <!-- 拼音 -->
+        <result property="dataScope" column="DATA_SCOPE"/> <!-- 数据域 -->
+        <result property="createBy" column="CREATE_BY"/> <!-- 创建人 -->
+        <result property="createDate" column="CREATE_DATE"/> <!-- 创建时间 -->
+        <result property="updateBy" column="UPDATE_BY"/> <!-- 修改人 -->
+        <result property="updateDate" column="UPDATE_DATE"/> <!-- 修改时间 -->
+        <result property="delFlag" column="DEL_FLAG"/> <!-- 状态标志（0正常 1删除 2停用） -->
+        <result property="remarks" column="REMARKS"/> <!-- 备注 -->
+        <result property="bak1" column="BAK1"/> <!-- 扩展INT类型 -->
+        <result property="bak2" column="BAK2"/> <!-- 扩展STRING类型 -->
+        <result property="bak3" column="BAK3"/> <!-- 扩展DATE类型 -->
+	</resultMap>
+	<!-- insert -->
+	<insert id="insert" parameterType="com.leaf.service.system.domain.SystemUser" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO system_user (
+        	ID ,
+        	USER_NAME ,
+        	USER_PWD ,
+        	USER_PLAIN_PWD ,
+        	USER_CODE ,
+        	USER_FULL_NAME ,
+        	FK_ORG_ID ,
+        	ORG_CODE ,
+        	ORG_NAME ,
+        	FK_STATION_ID ,
+        	USER_PHONE ,
+        	USER_WX_OPENID ,
+        	USER_EMAIL ,
+        	USER_MRG_TYPE ,
+        	USER_SEX ,
+        	USER_AVATAR ,
+        	USER_ISASTRICT ,
+        	USER_ASTRICT_LOGINTIME ,
+        	USER_ISWAP ,
+        	USER_LOGIN_LASTIP ,
+        	USER_LOGIN_LASTDATE ,
+        	USER_SORT ,
+        	PINYIN ,
+        	DATA_SCOPE ,
+        	CREATE_BY ,
+        	CREATE_DATE ,
+        	REMARKS 
+        ) VALUES (
+        	#{id}  ,
+        	#{userName}  ,
+        	#{userPwd}  ,
+        	#{userPlainPwd}  ,
+        	#{userCode}  ,
+        	#{userFullName}  ,
+        	#{fkOrgId}  ,
+        	#{orgCode}  ,
+        	#{orgName}  ,
+        	#{fkStationId}  ,
+        	#{userPhone}  ,
+        	#{userWxOpenid}  ,
+        	#{userEmail}  ,
+        	#{userMrgType}  ,
+        	#{userSex}  ,
+        	#{userAvatar}  ,
+        	#{userIsastrict}  ,
+        	#{userAstrictLogintime}  ,
+        	#{userIswap}  ,
+        	#{userLoginLastip}  ,
+        	#{userLoginLastdate}  ,
+        	#{userSort}  ,
+        	#{pinyin}  ,
+        	#{dataScope}  ,
+        	#{createBy}  ,
+        	#{createDate}  ,
+        	#{remarks}  
+        )
+	</insert>
+	
+	<!-- insertBatch -->
+	<insert id="insertBatch" parameterType="com.leaf.service.system.domain.SystemUser">
+		INSERT INTO system_user (
+        	ID ,
+        	USER_NAME ,
+        	USER_PWD ,
+        	USER_PLAIN_PWD ,
+        	USER_CODE ,
+        	USER_FULL_NAME ,
+        	FK_ORG_ID ,
+        	ORG_CODE ,
+        	ORG_NAME ,
+        	FK_STATION_ID ,
+        	USER_PHONE ,
+        	USER_WX_OPENID ,
+        	USER_EMAIL ,
+        	USER_MRG_TYPE ,
+        	USER_SEX ,
+        	USER_AVATAR ,
+        	USER_ISASTRICT ,
+        	USER_ASTRICT_LOGINTIME ,
+        	USER_ISWAP ,
+        	USER_LOGIN_LASTIP ,
+        	USER_LOGIN_LASTDATE ,
+        	USER_SORT ,
+        	PINYIN ,
+        	DATA_SCOPE ,
+        	CREATE_BY ,
+        	CREATE_DATE ,
+        	REMARKS 
+		)  values
+		<foreach collection="list" item="item" index="index"  
+        separator=",">
+        (
+       		#{item.id} ,
+       		#{item.userName} ,
+       		#{item.userPwd} ,
+       		#{item.userPlainPwd} ,
+       		#{item.userCode} ,
+       		#{item.userFullName} ,
+       		#{item.fkOrgId} ,
+       		#{item.orgCode} ,
+       		#{item.orgName} ,
+       		#{item.fkStationId} ,
+       		#{item.userPhone} ,
+       		#{item.userWxOpenid} ,
+       		#{item.userEmail} ,
+       		#{item.userMrgType} ,
+       		#{item.userSex} ,
+       		#{item.userAvatar} ,
+       		#{item.userIsastrict} ,
+       		#{item.userAstrictLogintime} ,
+       		#{item.userIswap} ,
+       		#{item.userLoginLastip} ,
+       		#{item.userLoginLastdate} ,
+       		#{item.userSort} ,
+       		#{item.pinyin} ,
+       		#{item.dataScope} ,
+       		#{item.createBy} ,
+       		#{item.createDate} ,
+       		#{item.remarks} 
+        )
+        </foreach>
+	</insert>
+	
+	<!-- deleteById -->
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM 
+		<include refid="TABLE" /> 
+		<where>
+	        systemUser_.ID = #{id} 
+		</where>
+	</delete>
+	
+	<!-- delete -->
+	<delete id="delete" parameterType="com.leaf.service.system.domain.SystemUser">
+		DELETE FROM 
+		<include refid="TABLE" /> 
+		<where>
+			<if test='id != null and id != ""'>
+	        systemUser_.ID = #{id} 
+	        </if> 
+	        <if test='userName != null and userName != ""'>
+	         AND  systemUser_.USER_NAME = #{userName}
+	        </if> 
+	        <if test='userPwd != null and userPwd != ""'>
+	         AND  systemUser_.USER_PWD = #{userPwd}
+	        </if> 
+	        <if test='userPlainPwd != null and userPlainPwd != ""'>
+	         AND  systemUser_.USER_PLAIN_PWD = #{userPlainPwd}
+	        </if> 
+	        <if test='userCode != null and userCode != ""'>
+	         AND  systemUser_.USER_CODE = #{userCode}
+	        </if> 
+	        <if test='userFullName != null and userFullName != ""'>
+	         AND  systemUser_.USER_FULL_NAME = #{userFullName}
+	        </if> 
+	        <if test='fkOrgId != null and fkOrgId != ""'>
+	         AND  systemUser_.FK_ORG_ID = #{fkOrgId}
+	        </if> 
+	        <if test='orgCode != null and orgCode != ""'>
+	         AND  systemUser_.ORG_CODE = #{orgCode}
+	        </if> 
+	        <if test='orgName != null and orgName != ""'>
+	         AND  systemUser_.ORG_NAME = #{orgName}
+	        </if> 
+	        <if test='fkStationId != null and fkStationId != ""'>
+	         AND  systemUser_.FK_STATION_ID = #{fkStationId}
+	        </if> 
+	        <if test='userPhone != null and userPhone != ""'>
+	         AND  systemUser_.USER_PHONE = #{userPhone}
+	        </if> 
+	        <if test='userWxOpenid != null and userWxOpenid != ""'>
+	         AND  systemUser_.USER_WX_OPENID = #{userWxOpenid}
+	        </if> 
+	        <if test='userEmail != null and userEmail != ""'>
+	         AND  systemUser_.USER_EMAIL = #{userEmail}
+	        </if> 
+	        <if test='userMrgType != null and userMrgType != ""'>
+	         AND  systemUser_.USER_MRG_TYPE = #{userMrgType}
+	        </if> 
+	        <if test='userSex != null and userSex != ""'>
+	         AND  systemUser_.USER_SEX = #{userSex}
+	        </if> 
+	        <if test='userAvatar != null and userAvatar != ""'>
+	         AND  systemUser_.USER_AVATAR = #{userAvatar}
+	        </if> 
+	        <if test='userIsastrict != null and userIsastrict != ""'>
+	         AND  systemUser_.USER_ISASTRICT = #{userIsastrict}
+	        </if> 
+	        <if test='userAstrictLogintime != null and userAstrictLogintime != ""'>
+	         AND  systemUser_.USER_ASTRICT_LOGINTIME = #{userAstrictLogintime}
+	        </if> 
+	        <if test='userIswap != null and userIswap != ""'>
+	         AND  systemUser_.USER_ISWAP = #{userIswap}
+	        </if> 
+	        <if test='userLoginLastip != null and userLoginLastip != ""'>
+	         AND  systemUser_.USER_LOGIN_LASTIP = #{userLoginLastip}
+	        </if> 
+	        <if test='userLoginLastdate != null '>
+	         AND  systemUser_.USER_LOGIN_LASTDATE = #{userLoginLastdate}
+	        </if> 
+	        <if test='userSort != null and userSort != ""'>
+	         AND  systemUser_.USER_SORT = #{userSort}
+	        </if> 
+	        <if test='pinyin != null and pinyin != ""'>
+	         AND  systemUser_.PINYIN = #{pinyin}
+	        </if> 
+	        <if test='dataScope != null and dataScope != ""'>
+	         AND  systemUser_.DATA_SCOPE = #{dataScope}
+	        </if> 
+	        <if test='createBy != null and createBy != ""'>
+	         AND  systemUser_.CREATE_BY = #{createBy}
+	        </if> 
+	        <if test='remarks != null and remarks != ""'>
+	         AND  systemUser_.REMARKS = #{remarks}
+	        </if> 
+		</where>
+	</delete>
+	
+	<!-- deleteByMap -->
+	<delete id="deleteByMap" parameterType="java.util.HashMap">
+		DELETE FROM 
+		<include refid="TABLE" /> 
+		<where>
+	        <if test='id != null and id != ""'>
+	        systemUser_.ID = #{id} 
+	        </if> 
+	        <if test='userName != null and userName != ""'>
+	         AND  systemUser_.USER_NAME = #{userName}
+	        </if> 
+	        <if test='userPwd != null and userPwd != ""'>
+	         AND  systemUser_.USER_PWD = #{userPwd}
+	        </if> 
+	        <if test='userPlainPwd != null and userPlainPwd != ""'>
+	         AND  systemUser_.USER_PLAIN_PWD = #{userPlainPwd}
+	        </if> 
+	        <if test='userCode != null and userCode != ""'>
+	         AND  systemUser_.USER_CODE = #{userCode}
+	        </if> 
+	        <if test='userFullName != null and userFullName != ""'>
+	         AND  systemUser_.USER_FULL_NAME = #{userFullName}
+	        </if> 
+	        <if test='fkOrgId != null and fkOrgId != ""'>
+	         AND  systemUser_.FK_ORG_ID = #{fkOrgId}
+	        </if> 
+	        <if test='orgCode != null and orgCode != ""'>
+	         AND  systemUser_.ORG_CODE = #{orgCode}
+	        </if> 
+	        <if test='orgName != null and orgName != ""'>
+	         AND  systemUser_.ORG_NAME = #{orgName}
+	        </if> 
+	        <if test='fkStationId != null and fkStationId != ""'>
+	         AND  systemUser_.FK_STATION_ID = #{fkStationId}
+	        </if> 
+	        <if test='userPhone != null and userPhone != ""'>
+	         AND  systemUser_.USER_PHONE = #{userPhone}
+	        </if> 
+	        <if test='userWxOpenid != null and userWxOpenid != ""'>
+	         AND  systemUser_.USER_WX_OPENID = #{userWxOpenid}
+	        </if> 
+	        <if test='userEmail != null and userEmail != ""'>
+	         AND  systemUser_.USER_EMAIL = #{userEmail}
+	        </if> 
+	        <if test='userMrgType != null and userMrgType != ""'>
+	         AND  systemUser_.USER_MRG_TYPE = #{userMrgType}
+	        </if> 
+	        <if test='userSex != null and userSex != ""'>
+	         AND  systemUser_.USER_SEX = #{userSex}
+	        </if> 
+	        <if test='userAvatar != null and userAvatar != ""'>
+	         AND  systemUser_.USER_AVATAR = #{userAvatar}
+	        </if> 
+	        <if test='userIsastrict != null and userIsastrict != ""'>
+	         AND  systemUser_.USER_ISASTRICT = #{userIsastrict}
+	        </if> 
+	        <if test='userAstrictLogintime != null and userAstrictLogintime != ""'>
+	         AND  systemUser_.USER_ASTRICT_LOGINTIME = #{userAstrictLogintime}
+	        </if> 
+	        <if test='userIswap != null and userIswap != ""'>
+	         AND  systemUser_.USER_ISWAP = #{userIswap}
+	        </if> 
+	        <if test='userLoginLastip != null and userLoginLastip != ""'>
+	         AND  systemUser_.USER_LOGIN_LASTIP = #{userLoginLastip}
+	        </if> 
+	        <if test='userLoginLastdate != null '>
+	         AND  systemUser_.USER_LOGIN_LASTDATE = #{userLoginLastdate}
+	        </if> 
+	        <if test='userSort != null and userSort != ""'>
+	         AND  systemUser_.USER_SORT = #{userSort}
+	        </if> 
+	        <if test='pinyin != null and pinyin != ""'>
+	         AND  systemUser_.PINYIN = #{pinyin}
+	        </if> 
+	        <if test='dataScope != null and dataScope != ""'>
+	         AND  systemUser_.DATA_SCOPE = #{dataScope}
+	        </if> 
+	        <if test='createBy != null and createBy != ""'>
+	         AND  systemUser_.CREATE_BY = #{createBy}
+	        </if> 
+	        <if test='remarks != null and remarks != ""'>
+	         AND  systemUser_.REMARKS = #{remarks}
+	        </if> 
+		</where>
+	</delete>
+	
+	<!-- deleteBatchIds -->
+	<delete id="deleteBatchIds" parameterType="String">
+		DELETE FROM 
+		<include refid="TABLE" /> 
+		<where>
+		systemUser_.ID IN
+		<foreach item="item" collection="list" open="(" separator="," close=")">
+         #{item}
+        </foreach>
+		</where>
+	</delete>
+	
+	<update id="update"  parameterType="com.leaf.service.system.domain.SystemUser">
+        UPDATE system_user
+        <set>
+	        <if test='userName != null'>
+		    USER_NAME = #{userName},   
+	        </if>
+	        <if test='userPwd != null'>
+		    USER_PWD = #{userPwd},   
+	        </if>
+	        <if test='userPlainPwd != null'>
+		    USER_PLAIN_PWD = #{userPlainPwd},   
+	        </if>
+	        <if test='userCode != null'>
+		    USER_CODE = #{userCode},   
+	        </if>
+	        <if test='userFullName != null'>
+		    USER_FULL_NAME = #{userFullName},   
+	        </if>
+	        <if test='fkOrgId != null'>
+		    FK_ORG_ID = #{fkOrgId},   
+	        </if>
+	        <if test='orgCode != null'>
+		    ORG_CODE = #{orgCode},   
+	        </if>
+	        <if test='orgName != null'>
+		    ORG_NAME = #{orgName},   
+	        </if>
+	        <if test='fkStationId != null'>
+		    FK_STATION_ID = #{fkStationId},   
+	        </if>
+	        <if test='userPhone != null'>
+		    USER_PHONE = #{userPhone},   
+	        </if>
+	        <if test='userWxOpenid != null'>
+		    USER_WX_OPENID = #{userWxOpenid},   
+	        </if>
+	        <if test='userEmail != null'>
+		    USER_EMAIL = #{userEmail},   
+	        </if>
+	        <if test='userMrgType != null'>
+		    USER_MRG_TYPE = #{userMrgType},   
+	        </if>
+	        <if test='userSex != null'>
+		    USER_SEX = #{userSex},   
+	        </if>
+	        <if test='userAvatar != null'>
+		    USER_AVATAR = #{userAvatar},   
+	        </if>
+	        <if test='userIsastrict != null'>
+		    USER_ISASTRICT = #{userIsastrict},   
+	        </if>
+	        <if test='userAstrictLogintime != null'>
+		    USER_ASTRICT_LOGINTIME = #{userAstrictLogintime},   
+	        </if>
+	        <if test='userIswap != null'>
+		    USER_ISWAP = #{userIswap},   
+	        </if>
+	        <if test='userLoginLastip != null'>
+		    USER_LOGIN_LASTIP = #{userLoginLastip},   
+	        </if>
+	        <if test='userLoginLastdate != null'>
+		    USER_LOGIN_LASTDATE = #{userLoginLastdate},   
+	        </if>
+	        <if test='userSort != null'>
+		    USER_SORT = #{userSort},   
+	        </if>
+	        <if test='pinyin != null'>
+		    PINYIN = #{pinyin},   
+	        </if>
+	        <if test='dataScope != null'>
+		    DATA_SCOPE = #{dataScope},   
+	        </if>
+	        <if test='updateBy != null'>
+		    UPDATE_BY = #{updateBy},   
+	        </if>
+	        <if test='updateDate != null'>
+		    UPDATE_DATE = #{updateDate},   
+	        </if>
+	        <if test='delFlag != null'>
+		    DEL_FLAG = #{delFlag},   
+	        </if>
+	        <if test='remarks != null'>
+		    REMARKS = #{remarks},   
+	        </if>
+	        <if test='bak1 != null'>
+		    BAK1 = #{bak1},   
+	        </if>
+	        <if test='bak2 != null'>
+		    BAK2 = #{bak2},   
+	        </if>
+	        <if test='bak3 != null'>
+		    BAK3 = #{bak3}   
+	        </if>
+	    </set>
+        <where> 
+	        ID = #{id} 
+	    </where>    	        
+	</update>
+	
+	<!-- updateBatchIds -->
+	<update id="updateBatchIds" parameterType="com.leaf.service.system.domain.SystemUser">
+		  <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+	     	UPDATE system_user
+        	<set>
+		        <if test='item.userName != null and item.userName != ""'>
+			    USER_NAME = #{item.userName},   
+		        </if>
+		        <if test='item.userPwd != null and item.userPwd != ""'>
+			    USER_PWD = #{item.userPwd},   
+		        </if>
+		        <if test='item.userPlainPwd != null and item.userPlainPwd != ""'>
+			    USER_PLAIN_PWD = #{item.userPlainPwd},   
+		        </if>
+		        <if test='item.userCode != null and item.userCode != ""'>
+			    USER_CODE = #{item.userCode},   
+		        </if>
+		        <if test='item.userFullName != null and item.userFullName != ""'>
+			    USER_FULL_NAME = #{item.userFullName},   
+		        </if>
+		        <if test='item.fkOrgId != null and item.fkOrgId != ""'>
+			    FK_ORG_ID = #{item.fkOrgId},   
+		        </if>
+		        <if test='item.orgCode != null and item.orgCode != ""'>
+			    ORG_CODE = #{item.orgCode},   
+		        </if>
+		        <if test='item.orgName != null and item.orgName != ""'>
+			    ORG_NAME = #{item.orgName},   
+		        </if>
+		        <if test='item.fkStationId != null and item.fkStationId != ""'>
+			    FK_STATION_ID = #{item.fkStationId},   
+		        </if>
+		        <if test='item.userPhone != null and item.userPhone != ""'>
+			    USER_PHONE = #{item.userPhone},   
+		        </if>
+		        <if test='item.userWxOpenid != null and item.userWxOpenid != ""'>
+			    USER_WX_OPENID = #{item.userWxOpenid},   
+		        </if>
+		        <if test='item.userEmail != null and item.userEmail != ""'>
+			    USER_EMAIL = #{item.userEmail},   
+		        </if>
+		        <if test='item.userMrgType != null and item.userMrgType != ""'>
+			    USER_MRG_TYPE = #{item.userMrgType},   
+		        </if>
+		        <if test='item.userSex != null and item.userSex != ""'>
+			    USER_SEX = #{item.userSex},   
+		        </if>
+		        <if test='item.userAvatar != null and item.userAvatar != ""'>
+			    USER_AVATAR = #{item.userAvatar},   
+		        </if>
+		        <if test='item.userIsastrict != null and item.userIsastrict != ""'>
+			    USER_ISASTRICT = #{item.userIsastrict},   
+		        </if>
+		        <if test='item.userAstrictLogintime != null and item.userAstrictLogintime != ""'>
+			    USER_ASTRICT_LOGINTIME = #{item.userAstrictLogintime},   
+		        </if>
+		        <if test='item.userIswap != null and item.userIswap != ""'>
+			    USER_ISWAP = #{item.userIswap},   
+		        </if>
+		        <if test='item.userLoginLastip != null and item.userLoginLastip != ""'>
+			    USER_LOGIN_LASTIP = #{item.userLoginLastip},   
+		        </if>
+		        <if test='item.userLoginLastdate != null '>
+			    USER_LOGIN_LASTDATE = #{item.userLoginLastdate},   
+		        </if>
+		        <if test='item.userSort != null and item.userSort != ""'>
+			    USER_SORT = #{item.userSort},   
+		        </if>
+		        <if test='item.pinyin != null and item.pinyin != ""'>
+			    PINYIN = #{item.pinyin},   
+		        </if>
+		        <if test='item.dataScope != null and item.dataScope != ""'>
+			    DATA_SCOPE = #{item.dataScope},   
+		        </if>
+		        <if test='item.updateBy != null and item.updateBy != ""'>
+			    UPDATE_BY = #{item.updateBy},   
+		        </if>
+		        <if test='item.updateDate != null and item.updateDate != ""'>
+			    UPDATE_DATE = #{item.updateDate},   
+		        </if>
+		        <if test='item.delFlag != null and item.delFlag != ""'>
+			    DEL_FLAG = #{item.delFlag},   
+		        </if>
+		        <if test='item.remarks != null and item.remarks != ""'>
+			    REMARKS = #{item.remarks},   
+		        </if>
+		        <if test='item.bak1 != null and item.bak1 != ""'>
+			    BAK1 = #{item.bak1},   
+		        </if>
+		        <if test='item.bak2 != null and item.bak2 != ""'>
+			    BAK2 = #{item.bak2},   
+		        </if>
+		        <if test='item.bak3 != null and item.bak3 != ""'>
+			    BAK3 = #{item.bak3}   
+		        </if>
+        	</set>
+        	<where> 
+		        ID = #{item.id} 
+		    </where>
+    	</foreach>
+	</update>
+	
+	<!-- selectById-->
+	<select id="selectById" resultMap="ENTITY_RESULT_MAP" parameterType="String">
+		<include refid="SELECT" />
+		<where>
+			<include refid="DEL_FLAG" />
+	         AND systemUser_.ID = #{id} 
+		</where>
+	</select>
+	
+	<select id="selectOne" resultMap="ENTITY_RESULT_MAP" parameterType="com.leaf.service.system.domain.SystemUser">
+		<include refid="SELECT" />
+		<where>
+			<include refid="DEL_FLAG" />
+			<if test='id != null and id != ""'>
+	       	 	AND systemUser_.ID = #{id} 
+	        </if>
+			<if test='userName != null and userName != ""'>
+				AND systemUser_.USER_NAME = #{userName} 
+			</if>
+			<if test='userPwd != null and userPwd != ""'>
+				AND systemUser_.USER_PWD = #{userPwd} 
+			</if>
+			<if test='userPlainPwd != null and userPlainPwd != ""'>
+				AND systemUser_.USER_PLAIN_PWD = #{userPlainPwd} 
+			</if>
+			<if test='userCode != null and userCode != ""'>
+				AND systemUser_.USER_CODE = #{userCode} 
+			</if>
+			<if test='userFullName != null and userFullName != ""'>
+				AND systemUser_.USER_FULL_NAME = #{userFullName} 
+			</if>
+			<if test='fkOrgId != null and fkOrgId != ""'>
+				AND systemUser_.FK_ORG_ID = #{fkOrgId} 
+			</if>
+			<if test='orgCode != null and orgCode != ""'>
+				AND systemUser_.ORG_CODE = #{orgCode} 
+			</if>
+			<if test='orgName != null and orgName != ""'>
+				AND systemUser_.ORG_NAME = #{orgName} 
+			</if>
+			<if test='fkStationId != null and fkStationId != ""'>
+				AND systemUser_.FK_STATION_ID = #{fkStationId} 
+			</if>
+			<if test='userPhone != null and userPhone != ""'>
+				AND systemUser_.USER_PHONE = #{userPhone} 
+			</if>
+			<if test='userWxOpenid != null and userWxOpenid != ""'>
+				AND systemUser_.USER_WX_OPENID = #{userWxOpenid} 
+			</if>
+			<if test='userEmail != null and userEmail != ""'>
+				AND systemUser_.USER_EMAIL = #{userEmail} 
+			</if>
+			<if test='userMrgType != null and userMrgType != ""'>
+				AND systemUser_.USER_MRG_TYPE = #{userMrgType} 
+			</if>
+			<if test='userSex != null and userSex != ""'>
+				AND systemUser_.USER_SEX = #{userSex} 
+			</if>
+			<if test='userAvatar != null and userAvatar != ""'>
+				AND systemUser_.USER_AVATAR = #{userAvatar} 
+			</if>
+			<if test='userIsastrict != null and userIsastrict != ""'>
+				AND systemUser_.USER_ISASTRICT = #{userIsastrict} 
+			</if>
+			<if test='userAstrictLogintime != null and userAstrictLogintime != ""'>
+				AND systemUser_.USER_ASTRICT_LOGINTIME = #{userAstrictLogintime} 
+			</if>
+			<if test='userIswap != null and userIswap != ""'>
+				AND systemUser_.USER_ISWAP = #{userIswap} 
+			</if>
+			<if test='userLoginLastip != null and userLoginLastip != ""'>
+				AND systemUser_.USER_LOGIN_LASTIP = #{userLoginLastip} 
+			</if>
+			<if test='userLoginLastdate != null '>
+				AND systemUser_.USER_LOGIN_LASTDATE = #{userLoginLastdate} 
+			</if>
+			<if test='userSort != null and userSort != ""'>
+				AND systemUser_.USER_SORT = #{userSort} 
+			</if>
+			<if test='pinyin != null and pinyin != ""'>
+				AND systemUser_.PINYIN = #{pinyin} 
+			</if>
+			<if test='dataScope != null and dataScope != ""'>
+				AND systemUser_.DATA_SCOPE = #{dataScope} 
+			</if>
+		</where>
+	</select>
+	
+	<!-- selectList -->
+	<select id="getJieshou" resultMap="ENTITY_RESULT_MAP">
+		select 
+		t.USER_NAME,
+		t.USER_FULL_NAME from system_user t
+LEFT JOIN system_notification_user note  on t.id=note.user_id and note.note_id=#{noteid}
+		<where>
+			note.id is not null
+		</where>
+	</select>
+	<!-- selectList -->
+	<select id="selectList" resultMap="ENTITY_RESULT_MAP">
+		<include refid="SELECT" />
+		<where>
+			<include refid="DEL_FLAG" />
+			<if test='userName != null and userName != ""'>
+				and systemUser_.USER_NAME=#{userName}
+			</if>
+			<if test='userPwd != null and userPwd != ""'>
+				and systemUser_.USER_PWD=#{userPwd}
+			</if>
+			<if test='userPlainPwd != null and userPlainPwd != ""'>
+				and systemUser_.USER_PLAIN_PWD=#{userPlainPwd}
+			</if>
+			<if test='userCode != null and userCode != ""'>
+				and systemUser_.USER_CODE=#{userCode}
+			</if>
+			<if test='userFullName != null and userFullName != ""'>
+				and systemUser_.USER_FULL_NAME=#{userFullName}
+			</if>
+			<if test='fkOrgId != null and fkOrgId != ""'>
+				and systemUser_.FK_ORG_ID=#{fkOrgId}
+			</if>
+			<if test='orgCode != null and orgCode != ""'>
+				and systemUser_.ORG_CODE=#{orgCode}
+			</if>
+			<if test='orgName != null and orgName != ""'>
+				and systemUser_.ORG_NAME=#{orgName}
+			</if>
+			<if test='fkStationId != null and fkStationId != ""'>
+				and systemUser_.FK_STATION_ID=#{fkStationId}
+			</if>
+			<if test='userPhone != null and userPhone != ""'>
+				and systemUser_.USER_PHONE=#{userPhone}
+			</if>
+			<if test='userWxOpenid != null and userWxOpenid != ""'>
+				and systemUser_.USER_WX_OPENID=#{userWxOpenid}
+			</if>
+			<if test='userEmail != null and userEmail != ""'>
+				and systemUser_.USER_EMAIL=#{userEmail}
+			</if>
+			<if test='userMrgType != null and userMrgType != ""'>
+				and systemUser_.USER_MRG_TYPE=#{userMrgType}
+			</if>
+			<if test='userSex != null and userSex != ""'>
+				and systemUser_.USER_SEX=#{userSex}
+			</if>
+			<if test='userAvatar != null and userAvatar != ""'>
+				and systemUser_.USER_AVATAR=#{userAvatar}
+			</if>
+			<if test='userIsastrict != null and userIsastrict != ""'>
+				and systemUser_.USER_ISASTRICT=#{userIsastrict}
+			</if>
+			<if test='userAstrictLogintime != null and userAstrictLogintime != ""'>
+				and systemUser_.USER_ASTRICT_LOGINTIME=#{userAstrictLogintime}
+			</if>
+			<if test='userIswap != null and userIswap != ""'>
+				and systemUser_.USER_ISWAP=#{userIswap}
+			</if>
+			<if test='userLoginLastip != null and userLoginLastip != ""'>
+				and systemUser_.USER_LOGIN_LASTIP=#{userLoginLastip}
+			</if>
+			<if test='userLoginLastdate != null '>
+				and systemUser_.USER_LOGIN_LASTDATE=#{userLoginLastdate}
+			</if>
+			<if test='userSort != null and userSort != ""'>
+				and systemUser_.USER_SORT=#{userSort}
+			</if>
+			<if test='pinyin != null and pinyin != ""'>
+				and systemUser_.PINYIN=#{pinyin}
+			</if>
+			<if test='dataScope != null and dataScope != ""'>
+				and systemUser_.DATA_SCOPE=#{dataScope}
+			</if>
+			<if test='createBy != null and createBy != ""'>
+				and systemUser_.CREATE_BY=#{createBy}
+			</if>
+			<if test='createDate != null '>
+				and systemUser_.CREATE_DATE=#{createDate}
+			</if>
+			<if test='updateBy != null and updateBy != ""'>
+				and systemUser_.UPDATE_BY=#{updateBy}
+			</if>
+			<if test='updateDate != null '>
+				and systemUser_.UPDATE_DATE=#{updateDate}
+			</if>
+			<if test='remarks != null and remarks != ""'>
+				and systemUser_.REMARKS=#{remarks}
+			</if>
+			<if test='bak1 != null and bak1 != ""'>
+				and systemUser_.BAK1=#{bak1}
+			</if>
+			<if test='bak2 != null and bak2 != ""'>
+				and systemUser_.BAK2=#{bak2}
+			</if>
+			<if test='bak3 != null and bak3 != ""'>
+				and systemUser_.BAK3=#{bak3}
+			</if>
+		</where>
+	</select>
+	
+	<!-- selectBatchIds -->
+	<select id="selectBatchIds" parameterType="String" resultMap="ENTITY_RESULT_MAP">
+		<include refid="SELECT" /> 
+		<where>
+		<include refid="NICK_NAME" />.ID IN
+		<foreach item="item" collection="list" open="(" separator="," close=")">
+         #{item}
+        </foreach>
+		</where>
+	</select>
+	
+	<!-- selectByMap -->
+	<select id="selectByMap" parameterType="java.util.HashMap" resultMap="ENTITY_RESULT_MAP">
+	
+	</select>
+	
+	<!-- selectCount -->
+	<select id="selectCount" parameterType="com.leaf.service.system.domain.SystemUser" resultType="long">
+		<include refid="SELECT_COUNT" />
+		<where>
+			<include refid="DEL_FLAG" />
+			<if test='userName != null and userName != ""'>
+				and systemUser_.USER_NAME=#{userName}
+			</if>
+			<if test='userPwd != null and userPwd != ""'>
+				and systemUser_.USER_PWD=#{userPwd}
+			</if>
+			<if test='userPlainPwd != null and userPlainPwd != ""'>
+				and systemUser_.USER_PLAIN_PWD=#{userPlainPwd}
+			</if>
+			<if test='userCode != null and userCode != ""'>
+				and systemUser_.USER_CODE=#{userCode}
+			</if>
+			<if test='userFullName != null and userFullName != ""'>
+				and systemUser_.USER_FULL_NAME=#{userFullName}
+			</if>
+			<if test='fkOrgId != null and fkOrgId != ""'>
+				and systemUser_.FK_ORG_ID=#{fkOrgId}
+			</if>
+			<if test='orgCode != null and orgCode != ""'>
+				and systemUser_.ORG_CODE=#{orgCode}
+			</if>
+			<if test='orgName != null and orgName != ""'>
+				and systemUser_.ORG_NAME=#{orgName}
+			</if>
+			<if test='fkStationId != null and fkStationId != ""'>
+				and systemUser_.FK_STATION_ID=#{fkStationId}
+			</if>
+			<if test='userPhone != null and userPhone != ""'>
+				and systemUser_.USER_PHONE=#{userPhone}
+			</if>
+			<if test='userWxOpenid != null and userWxOpenid != ""'>
+				and systemUser_.USER_WX_OPENID=#{userWxOpenid}
+			</if>
+			<if test='userEmail != null and userEmail != ""'>
+				and systemUser_.USER_EMAIL=#{userEmail}
+			</if>
+			<if test='userMrgType != null and userMrgType != ""'>
+				and systemUser_.USER_MRG_TYPE=#{userMrgType}
+			</if>
+			<if test='userSex != null and userSex != ""'>
+				and systemUser_.USER_SEX=#{userSex}
+			</if>
+			<if test='userAvatar != null and userAvatar != ""'>
+				and systemUser_.USER_AVATAR=#{userAvatar}
+			</if>
+			<if test='userIsastrict != null and userIsastrict != ""'>
+				and systemUser_.USER_ISASTRICT=#{userIsastrict}
+			</if>
+			<if test='userAstrictLogintime != null and userAstrictLogintime != ""'>
+				and systemUser_.USER_ASTRICT_LOGINTIME=#{userAstrictLogintime}
+			</if>
+			<if test='userIswap != null and userIswap != ""'>
+				and systemUser_.USER_ISWAP=#{userIswap}
+			</if>
+			<if test='userLoginLastip != null and userLoginLastip != ""'>
+				and systemUser_.USER_LOGIN_LASTIP=#{userLoginLastip}
+			</if>
+			<if test='userLoginLastdate != null '>
+				and systemUser_.USER_LOGIN_LASTDATE=#{userLoginLastdate}
+			</if>
+			<if test='userSort != null and userSort != ""'>
+				and systemUser_.USER_SORT=#{userSort}
+			</if>
+			<if test='pinyin != null and pinyin != ""'>
+				and systemUser_.PINYIN=#{pinyin}
+			</if>
+			<if test='dataScope != null and dataScope != ""'>
+				and systemUser_.DATA_SCOPE=#{dataScope}
+			</if>
+			<if test='createBy != null and createBy != ""'>
+				and systemUser_.CREATE_BY=#{createBy}
+			</if>
+			<if test='createDate != null '>
+				and systemUser_.CREATE_DATE=#{createDate}
+			</if>
+			<if test='updateBy != null and updateBy != ""'>
+				and systemUser_.UPDATE_BY=#{updateBy}
+			</if>
+			<if test='updateDate != null '>
+				and systemUser_.UPDATE_DATE=#{updateDate}
+			</if>
+			<if test='remarks != null and remarks != ""'>
+				and systemUser_.REMARKS=#{remarks}
+			</if>
+			<if test='bak1 != null and bak1 != ""'>
+				and systemUser_.BAK1=#{bak1}
+			</if>
+			<if test='bak2 != null and bak2 != ""'>
+				and systemUser_.BAK2=#{bak2}
+			</if>
+			<if test='bak3 != null and bak3 != ""'>
+				and systemUser_.BAK3=#{bak3}
+			</if>
+		</where>
+	</select>
+	
+	<!-- queryPage -->
+	<select id="queryPage" resultMap="ENTITY_RESULT_MAP" parameterType="java.util.HashMap">
+		<include refid="SELECT" />
+		<where>
+			<include refid="DEL_FLAG" />
+			<if test='o.userName != null and o.userName != ""'>
+				and systemUser_.USER_NAME='${o.userName}'
+			</if>
+			<if test='o.userPwd != null and o.userPwd != ""'>
+				and systemUser_.USER_PWD='${o.userPwd}'
+			</if>
+			<if test='o.userPlainPwd != null and o.userPlainPwd != ""'>
+				and systemUser_.USER_PLAIN_PWD='${o.userPlainPwd}'
+			</if>
+			<if test='o.userCode != null and o.userCode != ""'>
+				and systemUser_.USER_CODE='${o.userCode}'
+			</if>
+			<if test='o.userFullName != null and o.userFullName != ""'>
+				and systemUser_.USER_FULL_NAME='${o.userFullName}'
+			</if>
+			<if test='o.fkOrgId != null and o.fkOrgId != ""'>
+				and systemUser_.FK_ORG_ID='${o.fkOrgId}'
+			</if>
+			<if test='o.orgCode != null and o.orgCode != ""'>
+				and systemUser_.ORG_CODE='${o.orgCode}'
+			</if>
+			<if test='o.orgName != null and o.orgName != ""'>
+				and systemUser_.ORG_NAME='${o.orgName}'
+			</if>
+			<if test='o.fkStationId != null and o.fkStationId != ""'>
+				and systemUser_.FK_STATION_ID='${o.fkStationId}'
+			</if>
+			<if test='o.userPhone != null and o.userPhone != ""'>
+				and systemUser_.USER_PHONE='${o.userPhone}'
+			</if>
+			<if test='o.userWxOpenid != null and o.userWxOpenid != ""'>
+				and systemUser_.USER_WX_OPENID='${o.userWxOpenid}'
+			</if>
+			<if test='o.userEmail != null and o.userEmail != ""'>
+				and systemUser_.USER_EMAIL='${o.userEmail}'
+			</if>
+			<if test='o.userMrgType != null and o.userMrgType != ""'>
+				and systemUser_.USER_MRG_TYPE='${o.userMrgType}'
+			</if>
+			<if test='o.userSex != null and o.userSex != ""'>
+				and systemUser_.USER_SEX='${o.userSex}'
+			</if>
+			<if test='o.userAvatar != null and o.userAvatar != ""'>
+				and systemUser_.USER_AVATAR='${o.userAvatar}'
+			</if>
+			<if test='o.userIsastrict != null and o.userIsastrict != ""'>
+				and systemUser_.USER_ISASTRICT='${o.userIsastrict}'
+			</if>
+			<if test='o.userAstrictLogintime != null and o.userAstrictLogintime != ""'>
+				and systemUser_.USER_ASTRICT_LOGINTIME='${o.userAstrictLogintime}'
+			</if>
+			<if test='o.userIswap != null and o.userIswap != ""'>
+				and systemUser_.USER_ISWAP='${o.userIswap}'
+			</if>
+			<if test='o.userLoginLastip != null and o.userLoginLastip != ""'>
+				and systemUser_.USER_LOGIN_LASTIP='${o.userLoginLastip}'
+			</if>
+			<if test='o.userLoginLastdate != null '>
+				and systemUser_.USER_LOGIN_LASTDATE='${o.userLoginLastdate}'
+			</if>
+			<if test='o.userSort != null and o.userSort != ""'>
+				and systemUser_.USER_SORT='${o.userSort}'
+			</if>
+			<if test='o.pinyin != null and o.pinyin != ""'>
+				and systemUser_.PINYIN='${o.pinyin}'
+			</if>
+			<if test='o.dataScope != null and o.dataScope != ""'>
+				and systemUser_.DATA_SCOPE='${o.dataScope}'
+			</if>
+			<if test='o.createBy != null and o.createBy != ""'>
+				and systemUser_.CREATE_BY='${o.createBy}'
+			</if>
+			<if test='o.createDate != null and o.createDate != ""'>
+				and systemUser_.CREATE_DATE='${o.createDate}'
+			</if>
+			<if test='o.updateBy != null and o.updateBy != ""'>
+				and systemUser_.UPDATE_BY='${o.updateBy}'
+			</if>
+			<if test='o.updateDate != null and o.updateDate != ""'>
+				and systemUser_.UPDATE_DATE='${o.updateDate}'
+			</if>
+			<if test='o.delFlag != null and o.delFlag != ""'>
+				and systemUser_.DEL_FLAG='${o.delFlag}'
+			</if>
+			<if test='o.remarks != null and o.remarks != ""'>
+				and systemUser_.REMARKS='${o.remarks}'
+			</if>
+			<if test='o.bak1 != null and o.bak1 != ""'>
+				and systemUser_.BAK1='${o.bak1}'
+			</if>
+			<if test='o.bak2 != null and o.bak2 != ""'>
+				and systemUser_.BAK2='${o.bak2}'
+			</if>
+			<if test='o.bak3 != null and o.bak3 != ""'>
+				and systemUser_.BAK3='${o.bak3}'
+			</if>
+			
+			
+			<if test='o.userFullNameLike != null and o.userFullNameLike != ""'>
+				and systemUser_.user_full_name like '%${o.userFullNameLike}%'
+			</if>
+			<if test='o.userNameLike != null and o.userNameLike != ""'>
+				and systemUser_.user_name like '%${o.userNameLike}%'
+			</if>
+			<if test='o.userPhoneLike != null and o.userPhoneLike != ""'>
+				and systemUser_.user_phone like '%${o.userPhoneLike}%'
+			</if>
+		</where>
+		<choose>
+			<when test='pager.orderBy == "" or pager.orderBy ==null '>order by systemUser_.CREATE_DATE DESC</when>
+			<when test='pager.orderBy != "" and pager.orderBy !=null '>order by systemUser_.${pager.orderBy}</when>
+		</choose>
+	</select>
+	
+	<!-- 根据登录名查询用户 -->
+	<select id="getUserByLoginName" resultMap="ENTITY_RESULT_MAP" parameterType="String">
+		<include refid="SELECT" />
+		<where>
+		<include refid="DEL_FLAG" />
+		AND 
+		<include refid="NICK_NAME" />.USER_NAME = #{loginName}
+		</where>
+	</select>
+	
+	<!-- 更新登录信息，如登录IP、登录时间 -->
+	<update id="updateLoginInfo" parameterType="com.leaf.service.system.domain.SystemUser">
+		UPDATE system_user
+        <set>
+	        <if test='userLoginLastip != null and userLoginLastip != ""'>
+		    USER_LOGIN_LASTIP = #{userLoginLastip},   
+	        </if>
+	        <if test='userLoginLastdate != null '>
+		    USER_LOGIN_LASTDATE = #{userLoginLastdate}   
+	        </if>
+	    </set>
+        <where> 
+	        ID = #{id} 
+	    </where>  
+	</update>
+	
+	
+	<!-- 根据注册手机号获取用户 -->
+	<select id="getUserByUserPhone" resultMap="ENTITY_RESULT_MAP" parameterType="String">
+		<include refid="SELECT" />
+		<where>
+		<include refid="DEL_FLAG" />
+		AND 
+		<include refid="NICK_NAME" />.USER_PHONE = #{userPhone}
+		</where>
+	</select>
+	
+	<update id="resetPwd" parameterType="com.leaf.service.system.domain.SystemUser">
+		UPDATE system_user
+        <set>
+        	<if test='updateBy != null and updateBy != ""'>
+				UPDATE_BY=#{updateBy},
+			</if>
+			<if test='updateDate != null '>
+				UPDATE_DATE=#{updateDate},
+			</if>
+			USER_PWD=#{userPwd}
+        </set>
+        <where> 
+	       USER_PHONE=#{userPhone}
+	    </where>  
+	</update>
+	
+	<update id="updateFkOrgId" parameterType="com.leaf.service.system.domain.SystemUser">
+        UPDATE system_user
+        <set>
+	        <if test='fkOrgId != null'>
+		    FK_ORG_ID = #{fkOrgId},   
+	        </if>
+	        <if test='userMrgType != null'>
+		    USER_MRG_TYPE = #{userMrgType},   
+	        </if>
+	    </set>
+        <where> 
+	        ID = #{id} 
+	    </where>    	        
+	</update>
+	<select id="checkUserNamePhoneUnique" resultType="int" parameterType="com.leaf.service.system.domain.SystemUser">
+		select count(1)
+		from system_user
+		<where> 
+			DEL_FLAG = 0  
+			<if test=' userName != null and userName != "" '>
+				and (USER_NAME = #{userName} or USER_PHONE = #{userName})
+			</if>
+			<if test=' userPhone != null and userPhone != "" '>
+				and (USER_NAME = #{userPhone} or USER_PHONE = #{userPhone})
+			</if>
+			<if test='id != null and id != ""'>
+		        and ID != #{id} 
+			</if>
+	    </where>    	
+	</select>
+	
+	<update id="updateUser"  parameterType="com.leaf.service.system.domain.SystemUser">
+        UPDATE system_user
+        <set>
+		    USER_FULL_NAME = #{userFullName},   
+		    USER_PHONE = #{userPhone},   
+		    USER_EMAIL = #{userEmail},   
+		    USER_SEX = #{userSex},   
+		    <if test='userPwd != null and userPwd != ""'>
+		        USER_PWD = #{userPwd}, 
+			</if>
+			UPDATE_BY=#{updateBy},
+			UPDATE_DATE=#{updateDate},
+	    </set>
+        <where> 
+	        ID = #{id} 
+	    </where>    	        
+	</update>
+</mapper>
+

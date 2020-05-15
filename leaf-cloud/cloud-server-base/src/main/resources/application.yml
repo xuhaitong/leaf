@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: cloud-server-base
+server:
+  port: 8021
+
+

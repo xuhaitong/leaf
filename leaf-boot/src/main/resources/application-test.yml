@@ -1,0 +1,80 @@
+
+mybatis:
+  check-config-location: true
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mappers/**/*-mapper.xml
+  type-aliases-package: net.siufung.erptemplat.quickstart
+  pagination:
+    pageSqlRegular: .*query.*
+    dialect: mysql
+    
+datasource:
+  druid:
+    url: jdbc:mysql://localhost:3306/siufung_authority?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;allowMultiQueries=true&amp;useSSL=true
+    username: root
+    password: winsoft_1987
+    driver-class-name: com.mysql.jdbc.Driver
+    initialSize: 5
+    maxActive: 20
+    minIdle: 5
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall,log4j
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+shiro:
+  login-url: /login
+  success-url: /index
+  unauthorized-url: /unauthorized
+  sign-in:
+    user-param: username 
+    password-param: password 
+    remember-me-param: rememberMe 
+  realm-class: net.siufung.erptemplat.quickstart.security.MainRealm
+  filters:
+    my-filter: net.siufung.erptemplat.quickstart.security.MyFilter
+  filter-chain-definitions:
+    /test-my-filter: my-filter
+    /logout: logout
+    /favicon.ico: anon
+    /assets/**: anon
+    /**: authc
+                    
+logging:
+  file: erptemplat-quickstart-dev.log
+  level.*: INFO  
+
+#file store mode   1:LOCAL- LOCAL FILE SYSTEM  2:FTP - FTP SERVER
+#file store path pre   -- compat for LOCAL AND FTP
+file:
+  store:
+    mode: LOCAL
+    path-pre: D:/LOCALFILESTORE
+    ftp-ip: 127.0.0.1
+    ftp-port: 21
+    ftp-username: ftpuser
+    ftp-password: ftppass
+  preview:
+  #file preview store path
+    store-path: D:/LOCALFILESTORE/preview
+#huc: 
+#  server:
+#    base-url: https://tuser.haier.net:8182
+#    app-key: 
+#    secret: 
+#    token-method: /services/getToken
+#    token-check-method: /services/checkToken
+#    mobile-code-method: /services/sendMobile
+#    mobile-code-check-method: /services/checkMobileCode
+#uoc: 
+#  server:
+#    base-url: http://taccount.haier.com
+#    client-id: cosmoplatarea
+#    client-secret: QU3zrtoTYqrYh7

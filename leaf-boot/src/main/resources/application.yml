@@ -1,0 +1,89 @@
+server:
+  context-path: /leaf
+  error:
+    path: /error
+  port: 8082
+  session-timeout: 60
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: leaf
+  aop:
+    auto: true
+    proxy-target-class: false  
+  http:
+    encoding:
+      charset: utf-8
+    converters:
+      preferred-json-mapper: jackson
+    multipart:
+      max-file-size: 10MB      
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    deserialization:
+      accept-empty-array-as-null-object: false
+    serialization:
+      indent_output: true  
+  jpa:
+    show-sql: true
+    format-sql: true
+
+swagger:
+  title: SWAGGER RESTFUL APIS
+  description: 扫描 【com.haier.cosmomi】 包
+  base-package: com.haier.cosmomi
+  contact: siufung.chen
+  version: 1.0.1
+
+mybatis:
+  check-config-location: true
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mappers/**/*Mapper.xml
+  type-aliases-package: com.leaf.service
+  pagination:
+    pageSqlRegular: .*query.*
+    dialect: mysql
+token:
+  header: Authorization
+  secret: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+  expiration: 7200
+  pre: Bearer  
+
+flyway:
+  enable: false
+  encoding: UTF-8
+  check-location: true
+  locations: classpath:db/migration       
+  
+  
+cosmo: 
+  message: 
+    url: http://message.dev.cosmoplat.com/message/sendmessage
+    # 有效时间 单位 minute
+    expire-in: 2
+
+info:
+  head: head
+  body: body
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        #加载所有的端点，默认只加载了info、health
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    #可以关闭指定的端点
+    shutdown:
+      enabled: false
+    env:
+      enabled: true
+    
+  
+  

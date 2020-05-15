@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: cloud-server-business
+server:
+  port: 8022
+
+
