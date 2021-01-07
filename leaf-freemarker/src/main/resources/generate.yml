@@ -1,0 +1,13 @@
+
+database:
+    ip: 192.168.137.101
+    port: 3306
+    username: bomdev
+    password: bomdev
+    dialect: mysql
+
+generate:
+    tables: bom_ts_ve_his_recode, bom_ts_ve_recode
+    key: EAF_ID
+    del-key:
+
