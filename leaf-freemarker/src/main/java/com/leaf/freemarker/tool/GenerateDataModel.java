@@ -1,5 +1,6 @@
 package com.leaf.freemarker.tool;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,13 +8,24 @@ import java.util.List;
  * @description:
  * @Date: 2021-01-05 16:54
  **/
-public class GenerateDataModel {
+public class GenerateDataModel implements Serializable {
 
 	private String tableName;
+
+	private String className;
 
 	private String tableComments;
 
 	private List<Columns> columnsList;
+
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className == null ? "" : className.trim();
+	}
 
 	public String getTableName() {
 		return tableName;
@@ -39,17 +51,41 @@ public class GenerateDataModel {
 		this.columnsList = columnsList;
 	}
 }
-class Columns{
 
+class Columns implements Serializable{
+
+	/**字段名**/
 	private String fieldName;
 
+	/**类属性名**/
+	private String classPropertyName;
+
+	/**字段注释**/
 	private String fieldComments;
-
+	/**字段类型**/
 	private String type;
-
+	/**字段长度**/
 	private String length;
-
+	/**字段键**/
 	private String key;
+
+	private String javaClassName;
+
+	public String getJavaClassName() {
+		return javaClassName;
+	}
+
+	public void setJavaClassName(String javaClassName) {
+		this.javaClassName = javaClassName == null ? "" : javaClassName.trim();
+	}
+
+	public String getClassPropertyName() {
+		return classPropertyName;
+	}
+
+	public void setClassPropertyName(String classPropertyName) {
+		this.classPropertyName = classPropertyName == null ? "" : classPropertyName.trim();
+	}
 
 	public String getFieldName() {
 		return fieldName;
@@ -66,6 +102,7 @@ class Columns{
 	public void setFieldComments(String fieldComments) {
 		this.fieldComments = fieldComments == null ? "" : fieldComments.trim();
 	}
+
 
 	public String getType() {
 		return type;

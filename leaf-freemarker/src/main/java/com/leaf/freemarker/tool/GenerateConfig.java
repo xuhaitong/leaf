@@ -1,6 +1,10 @@
 package com.leaf.freemarker.tool;
 
+import com.leaf.plugin.util.StringUtils;
+
+import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -8,76 +12,88 @@ import java.util.List;
  * @description:
  * @Date: 2021-01-05 16:44
  **/
-public class GenerateConfig {
+public interface GenerateConfig {
 
-	/*===================项目功能模块信息===================*/
-	/*如果文件存在是否强制更新文件*/
-	public static final boolean force = false;
-	/*项目路径*/
-	public static final String project_path = "F:/idea/imos_plat_gz";
-	/*指定存放模块*/
-	public static final String module_business_path = "departPart";//如果有多层必须用'/'分割
-	public static final String module_business_name = "临时拆件管理";//如果有多层必须用'/'分割
-	private static final String module_business_package = "departPart";
-	/*通用配置*/
-	private static final String mainJava = "src/main/java";
-	private static final String mainResources = "src/main/resources";
-	private static final String commonPath = "com/crrc/imos";
-	private static final String commonPackage = "com.crrc.imos";
-	private static final String dao = "imos-dao/imos-dao-railwayhs";
-	private static final String model = "imos-model/imos-model-railwayhs";
-	private static final String service = "imos-platform/imos-platform-railwayhs";
-	private static final String web = "imos-railwayhs/imos-railwayhs-gzh";
-	private static final String front = "imos-web/imos-web-railwayhs/imos-web-railwayhs-gzh";
+	/**业务模块 ，多级使用 . 分割 例 ： system.org**/
+	String BUZI_MODEL = "buzi.freeMarker";
+
+	String BUZI_MODEL_REPLACE_TAG="{0}";
+
+	/**项目根目录**/
+	String ROOT_PATH="D:\\CodeProgram\\JBINFO\\CODING\\ResourceManage";
+
+	/**bean 项目目录**/
+	String PROJECT_BEAN_PATH = "resource-manage-server\\resource-manage-server-boot";
+	/**dao 项目目录**/
+	String PROJECT_DAO_PATH = "resource-manage-server\\resource-manage-server-boot";
+	/**controller 项目目录**/
+	String PROJECT_CONTROLLER_PATH = "resource-manage-server\\resource-manage-server-boot";
+	/**service 项目目录**/
+	String PROJECT_SERVICE_PATH = "resource-manage-server\\resource-manage-server-boot";
+
+	/**web 项目目录**/
+	String PROJECT_WEB_PATH = "resource-manage-web\\src";
 
 
-	/*===================DAO===================*/
-	/*bean文件路径*/
-	public static final String bean_path = project_path+"/"+dao+"/"+mainJava+"/"+commonPath+"/dao/plat/railwayhs/"+module_business_path+"/entity";
-	/*实体bean包路径*/
-	public static final String bean_package = commonPackage+".dao.plat.railwayhs."+module_business_package+".entity";
-	/*dao文件路径*/
-	public static final String dao_path = project_path+"/"+dao+"/"+mainJava+"/"+commonPath+"/dao/plat/railwayhs/"+module_business_path+"/dao";
-	/*Dao包路径*/
-	public static final String dao_package = commonPackage+".dao.plat.railwayhs."+module_business_package+".dao";
-	/*mapper文件路径*/
-	public static final String xml_path = project_path+"/"+dao+"/"+mainResources+"/mybatis/mappers/railwayhs/"+module_business_path;
 
-	/*===================MODEL===================*/
-	/*model文件路径*/
-	public static final String model_path = project_path+"/"+model+"/"+mainJava+"/"+commonPath+"/model/railwayhs/dto/"+module_business_path;
-	/*model包路径*/
-	public static final String model_package = commonPackage+".model.railwayhs.dto."+module_business_package;
+	/**JAVA 类目录**/
+	String MAIN_JAVA_PATH="src\\main\\java";
+	/**资源文件 目录**/
+	String MAIN_RESOURCE_PATH="src\\main\\resources";
+	/** mapper 文件目录**/
+	String MAPPER_PATH="mybatis\\mappers\\{0}";
 
-	/*===================PLATFORM===================*/
-	/*service文件路径*/
-	public static final String service_path = project_path+"/"+service+"/"+mainJava+"/"+commonPath+"/platform/railwayhs/service/"+module_business_path;
-	/*Service包路径*/
-	public static final String service_package = commonPackage+".platform.railwayhs.service."+module_business_package;
-	/*serviceImpl文件路径*/
-	public static final String serviceImpl_path = project_path+"/"+service+"/"+mainJava+"/"+commonPath+"/platform/railwayhs/service/"+module_business_path+"/impl";
-	/*ServiceImpl包路径*/
-	public static final String serviceImpl_package = commonPackage+".platform.railwayhs.service."+module_business_package+".impl";
-	/*controller文件路径*/
-	public static final String service_controller_path = project_path+"/"+service+"/"+mainJava+"/"+commonPath+"/platform/railwayhs/controller/"+module_business_path;
-	/*Service_Controller包路径*/
-	public static final String service_controller_package = commonPackage+".platform.railwayhs.controller."+module_business_package;
 
-	/*===================PROJECT===================*/
-	/*controller文件路径*/
-	public static final String project_controller_path = project_path+"/"+web+"/"+mainJava+"/"+commonPath+"/project/railwayhs/gzh/controller/"+module_business_path;
-	/*project_Controller包路径*/
-	public static final String project_controller_package = commonPackage+".project.railwayhs.gzh.controller."+module_business_package;
 
-	/*===================FRONT===================*/
-	/*前端html/js/css路径*/
-	public static final String front_js_path = project_path+"/"+front+"/src/pages/"+module_business_path;
-	public static final String front_css_path = project_path+"/"+front+"/src/pages/"+module_business_path;
-	public static final String front_html_path = project_path+"/"+front+"/src/pages/"+module_business_path;
+	/**controller package 路径**/
+	String PACKAGE_CONTROLLER = "com.leaf.resource.boot.controller.{0}";
+	/**bean package 路径**/
+	String PACKAGE_BEAN = "com.leaf.resource.persistence.{0}.domain";
+	/**dao package 路径**/
+	String PACKAGE_DAO = "com.leaf.resource.persistence.{0}.dao";
+	/**service package 路径**/
+	String PACKAGE_SERVICE = "com.leaf.resource.persistence.{0}.service";
+	/**service实现 package 路径**/
+	String PACKAGE_SERVICE_IMPL = "com.leaf.resource.persistence.{0}.service.impl";
 
-	public static List<String> beanExclude = Arrays.asList("id", "remarks", "datacode", "factoryid", "isflag", "delflag", "createby", "createtime", "lastupby", "lastuptime", "sort",
-			"sortorder", "pageno", "pagesize", "userid", "ak", "uk");
-	public static List<String> modelExclude = Arrays.asList("id", "remarks", "datacode", "factoryid", "isflag", "delflag", "createby", "createtime", "lastupby", "lastuptime", "sort",
+	List<String> CLASS_PROPERTY_EXCLUDE = Arrays.asList("id", "remarks", "datacode", "factoryid", "isflag", "delflag", "createby", "createtime", "lastupby", "lastuptime", "sort",
 			"sortorder", "pageno", "pagesize", "userid", "ak", "uk");
 
+	/** 
+	* @Description: 基础数据 map
+	* @Param:  
+	* @return:  
+	* @Author: Leaf Xu
+	* @Date: 2021/1/8 16:24
+	*/
+	static HashMap<String,Object> getConfigMap(String buziModel){
+		HashMap<String,Object> configMap = new HashMap<>();
+		if(StringUtils.isBlank(buziModel)){
+			buziModel = BUZI_MODEL;
+		}
+
+		Field[] fields = GenerateConfig.class.getDeclaredFields();
+		try {
+			for(Field field:fields){
+				Object fieldValue = field.get(field.getDeclaringClass());
+				if("java.lang.String".equals(field.getType().getName())){
+					String fieldValueStr = (String) fieldValue;
+					//替换指定占位符——业务模块{0}
+					if (StringUtils.contains(fieldValueStr,BUZI_MODEL_REPLACE_TAG)){
+						//区分路径是文件目录或是package目录
+						if(fieldValueStr.indexOf(".")< 0){
+							fieldValueStr = StringUtils.replace(fieldValueStr,BUZI_MODEL_REPLACE_TAG,buziModel);
+							fieldValue = StringUtils.replace(fieldValueStr,".","\\");
+						}else{
+							fieldValue = StringUtils.replace(fieldValueStr,BUZI_MODEL_REPLACE_TAG,buziModel);
+						}
+					}
+				}
+				configMap.put(field.getName(),fieldValue);
+			}
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return configMap;
+	}
 }

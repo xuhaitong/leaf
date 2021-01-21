@@ -2,14 +2,11 @@ package com.leaf.freemarker.tool;
 
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.leaf.plugin.util.StringUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -27,6 +24,9 @@ public class GenerateAction {
 	* @Date: 2021/1/6 15:53
 	*/ 
 	public static void generateEnter() throws SQLException, ClassNotFoundException {
+
+		Map<String,Object> configMap = GenerateConfig.getConfigMap("");
+
 		List<GenerateDataModel> tableList = new ArrayList<>();
 		List<String> generateTables = Arrays.stream(GenerateDBConfig.arrayTable).map(String::toLowerCase).collect(Collectors.toList());
 		GenerateDBConfig.init();
@@ -39,6 +39,7 @@ public class GenerateAction {
 				GenerateDataModel model = new GenerateDataModel();
 				model.setTableName(tableName);
 				model.setTableComments(comment);
+				model.setClassName(StringUtils.toCapitalizeCamelCase(tableName));
 				List<Columns> columnsList = getColumnListByTABLENAME(GenerateDBConfig.connect,tableName);
 				model.setColumnsList(columnsList);
 				tableList.add(model);
@@ -47,14 +48,20 @@ public class GenerateAction {
 
 		if(tableList.size()>0){
 			tableList.forEach(table->{
-				generateBean(table);
+				generateBean(table,configMap);
 			});
 		}
 
-		System.out.println(JSONArray.toJSON(tableList).toString());
+//		System.out.println(JSONArray.toJSON(tableList).toString());
 	}
 
-	private static void generateBean(GenerateDataModel table) {
+	private static void generateBean(GenerateDataModel table, Map<String, Object> configMap) {
+
+		HashMap<String, Object> dataMap = new HashMap<>();
+		dataMap.put("table",JSONObject.toJSON(table));
+		dataMap.put("config",configMap);
+//		dataMap.put("table",table);
+		FreeMarkerUtils.generateFile("BeanModel.ftl","D:\\freeMarkerGenerate\\",table.getClassName()+".java",dataMap);
 
 	}
 
@@ -73,10 +80,12 @@ public class GenerateAction {
 		while (results.next()) {
 			Columns columns = new Columns();
 			columns.setFieldName(results.getString("FIELD"));
+			columns.setClassPropertyName(StringUtils.toCamelCase(results.getString("FIELD")));
 			columns.setFieldComments(results.getString("COMMENT"));
 			columns.setType(results.getString("TYPE"));
 			columns.setLength("");
 			columns.setKey(results.getString("KEY"));
+			columns.setJavaClassName(MysqlDataTypeEnum.getJavaType(columns.getType()));
 
 			columnsList.add(columns);
 		}
@@ -86,6 +95,7 @@ public class GenerateAction {
 
 
 	public static void main(String[] args) throws SQLException, ClassNotFoundException {
+
 		generateEnter();
 
 	}
